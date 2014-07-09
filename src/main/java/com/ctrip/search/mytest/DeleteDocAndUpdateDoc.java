@@ -33,6 +33,7 @@ public class DeleteDocAndUpdateDoc {
 		IndexUtil.initIndexDir();
 		Directory dir = FSDirectory.open(new File(IndexUtil.getIndexDir()));
 		IndexWriterConfig indexWriterCfg = new IndexWriterConfig(Version.LUCENE_48, new WhitespaceAnalyzer(Version.LUCENE_48));
+		indexWriterCfg.setInfoStream(System.out);
 		indexWriterCfg.setOpenMode(OpenMode.CREATE);
 		IndexWriter indexWriter = new IndexWriter(dir, indexWriterCfg);
 		System.out.println("---------------增加doc1------------------------");
@@ -68,6 +69,7 @@ public class DeleteDocAndUpdateDoc {
 		System.out.println("num:"+indexWriter.numDocs());
 		System.out.println("max:"+indexWriter.maxDoc());
 		System.out.println("numram:"+indexWriter.numRamDocs());
+//		indexWriter
 		indexWriter.close();
 		
 		IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(

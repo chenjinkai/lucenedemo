@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -76,10 +75,10 @@ public class SearchFiles {
 		BufferedReader in = null;
 		if (queries != null)
 			in = new BufferedReader(new InputStreamReader(new FileInputStream(
-					queries), StandardCharsets.UTF_8));
+					queries), "utf-8"));
 		else {
 			in = new BufferedReader(new InputStreamReader(System.in,
-					StandardCharsets.UTF_8));
+					"utf-8"));
 		}
 
 		QueryParser parser = new QueryParser(Version.LUCENE_48, field, analyzer);

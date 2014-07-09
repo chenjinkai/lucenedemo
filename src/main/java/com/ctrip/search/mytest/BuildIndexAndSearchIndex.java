@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -83,7 +82,7 @@ public class BuildIndexAndSearchIndex {
 			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_48);
 			QueryParser parser = new QueryParser(Version.LUCENE_48, "title", analyzer);
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in,
-					StandardCharsets.UTF_8));
+					"utf-8"));
 			while(true){
 				System.out.println("please enter the field:");
 				String field = in.readLine();
