@@ -70,7 +70,7 @@ public class SearchFiles {
 				index)));
 		IndexSearcher searcher = new IndexSearcher(reader);
 
-		Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_48);
+		Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_45);
 
 		BufferedReader in = null;
 		if (queries != null)
@@ -81,7 +81,7 @@ public class SearchFiles {
 					"utf-8"));
 		}
 
-		QueryParser parser = new QueryParser(Version.LUCENE_48, field, analyzer);
+		QueryParser parser = new QueryParser(Version.LUCENE_45, field, analyzer);
 		while (true) {
 			if ((queries == null) && (queryString == null)) {
 				System.out.println("Enter query: ");

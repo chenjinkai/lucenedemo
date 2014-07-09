@@ -32,7 +32,7 @@ public class DeleteDocAndUpdateDoc {
 		System.out.println("创建索引");
 		IndexUtil.initIndexDir();
 		Directory dir = FSDirectory.open(new File(IndexUtil.getIndexDir()));
-		IndexWriterConfig indexWriterCfg = new IndexWriterConfig(Version.LUCENE_48, new WhitespaceAnalyzer(Version.LUCENE_48));
+		IndexWriterConfig indexWriterCfg = new IndexWriterConfig(Version.LUCENE_45, new WhitespaceAnalyzer(Version.LUCENE_45));
 		indexWriterCfg.setInfoStream(System.out);
 		indexWriterCfg.setOpenMode(OpenMode.CREATE);
 		IndexWriter indexWriter = new IndexWriter(dir, indexWriterCfg);

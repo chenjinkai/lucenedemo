@@ -49,7 +49,7 @@ public class BuildIndexAndSearchIndex {
 			System.out.println("创建索引");
 			IndexUtil.initIndexDir();
 			Directory dir = FSDirectory.open(new File(IndexUtil.getIndexDir()));
-			IndexWriterConfig indexWriterCfg = new IndexWriterConfig(Version.LUCENE_48, new WhitespaceAnalyzer(Version.LUCENE_48));
+			IndexWriterConfig indexWriterCfg = new IndexWriterConfig(Version.LUCENE_45, new WhitespaceAnalyzer(Version.LUCENE_45));
 			indexWriterCfg.setOpenMode(OpenMode.CREATE);
 			IndexWriter indexWriter = new IndexWriter(dir, indexWriterCfg);
 			Document doc = new Document();
@@ -79,8 +79,8 @@ public class BuildIndexAndSearchIndex {
 			System.out.println("文档数" + reader.maxDoc());
 			System.out.println("文档数" + reader.numDocs());
 			IndexSearcher searcher = new IndexSearcher(reader);
-			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_48);
-			QueryParser parser = new QueryParser(Version.LUCENE_48, "title", analyzer);
+			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_45);
+			QueryParser parser = new QueryParser(Version.LUCENE_45, "title", analyzer);
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in,
 					"utf-8"));
 			while(true){

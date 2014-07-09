@@ -63,8 +63,8 @@ public class IndexFiles {
 		try {
 			System.out.println("Indexing to directory '" + indexPath + "'...");
 			Directory dir = FSDirectory.open(new File(indexPath));
-			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_48);
-			IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_48, analyzer);
+			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_45);
+			IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_45, analyzer);
 			if (create) {
 				iwc.setOpenMode(OpenMode.CREATE);
 			}else{
