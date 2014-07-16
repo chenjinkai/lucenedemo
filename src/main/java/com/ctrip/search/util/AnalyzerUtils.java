@@ -29,6 +29,12 @@ public class AnalyzerUtils {
 		displayTokens(analyzer.tokenStream("content", new StringReader(text)));
 	}
 	
+	/**
+	 * 输出语汇文本
+	 * 
+	 * @param stream
+	 * @throws IOException
+	 */
 	private static void displayTokens(TokenStream stream) throws IOException{
 		CharTermAttribute term = stream.addAttribute(CharTermAttribute.class);
 		stream.reset();
@@ -36,8 +42,16 @@ public class AnalyzerUtils {
 			System.out.print(term.toString() + ",");
 		}
 		System.out.println("");
+		stream.close();
 	}
 	
+	/**
+	 * 输出完整的语汇单元信息
+	 * 
+	 * @param analyzer
+	 * @param text
+	 * @throws IOException
+	 */
 	public static void displayTokensWithFullDetail(Analyzer analyzer, String text) throws IOException{
 		TokenStream stream = analyzer.tokenStream("content", text);
 		CharTermAttribute term = stream.addAttribute(CharTermAttribute.class);
@@ -54,5 +68,26 @@ public class AnalyzerUtils {
 			}
 			System.out.println("["+term+":"+offset.startOffset()+"->"+ offset.endOffset() + ":" + type.type() +"]");
 		}
+		stream.close();
+	}
+	
+	/**
+	 * 判断分析结果是否正常
+	 * 
+	 * @param analyzer
+	 * @param input
+	 * @param output
+	 * @throws Exception
+	 */
+	public static void assertAnalyzesTo(Analyzer analyzer, String input, String[] output) throws Exception{
+		TokenStream stream = analyzer.tokenStream("field", input);
+		stream.reset();
+		CharTermAttribute termAttr = stream.addAttribute(CharTermAttribute.class);
+		for(String expected : output){
+			System.out.println(stream.incrementToken() == true);
+			System.out.println(expected.equals(termAttr.toString()));
+		}
+		System.out.println(stream.incrementToken() == false);
+		stream.close();
 	}
 }
