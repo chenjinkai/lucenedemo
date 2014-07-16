@@ -1,4 +1,4 @@
 lucenedemo
 ==========
 
-lucene4.8.1 demo
+lucene4.5.1 demo
