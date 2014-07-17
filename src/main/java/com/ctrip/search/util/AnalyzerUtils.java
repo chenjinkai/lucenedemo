@@ -88,6 +88,7 @@ public class AnalyzerUtils {
 			System.out.println(expected.equals(termAttr.toString()));
 		}
 		System.out.println(stream.incrementToken() == false);
+		stream.end();
 		stream.close();
 	}
 }
