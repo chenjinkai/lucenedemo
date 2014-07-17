@@ -46,10 +46,6 @@ public class SynonymFilter extends TokenFilter {
 			charAttribute.append(syn);
 			posincrAttribute.setPositionIncrement(0);
 			return true;
-//			System.out.println(charAttribute);
-//			System.out.println(posincrAttribute.getPositionIncrement());
-//			System.out.println(offsetAttribute.startOffset());
-//			System.out.println(offsetAttribute.endOffset());
 		}
 				
 		if(!this.input.incrementToken()){
