@@ -91,4 +91,22 @@ public class AnalyzerUtils {
 		stream.end();
 		stream.close();
 	}
+	
+	public static void displayTokensWithPositions(Analyzer analyzer, String text)throws IOException{
+		TokenStream stream = analyzer.tokenStream("content", text);
+		CharTermAttribute charAttribute = stream.addAttribute(CharTermAttribute.class);
+		PositionIncrementAttribute posincr = stream.addAttribute(PositionIncrementAttribute.class);
+		int position = 0;
+		stream.reset();
+		while(stream.incrementToken()){
+			int increment = posincr.getPositionIncrement();
+			if(increment > 0){
+				position = position + increment;
+				System.out.println();
+				System.out.print(position + ":");
+			}
+			System.out.print("[" + charAttribute + "]");
+		}
+		System.out.println();
+	}
 }

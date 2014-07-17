@@ -6,6 +6,7 @@ import java.util.Stack;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.util.AttributeSource;
 /**
@@ -25,14 +26,15 @@ public class SynonymFilter extends TokenFilter {
 	
 	private CharTermAttribute charAttribute;
 	private PositionIncrementAttribute posincrAttribute;
-	
-	
+	private OffsetAttribute offsetAttribute;
+
 	protected SynonymFilter(TokenStream input, SynonymEngine engine) {
 		super(input);
 		synonymStack = new Stack<String>();
 		this.engine = engine;
 		this.charAttribute = addAttribute(CharTermAttribute.class);
 		this.posincrAttribute = addAttribute(PositionIncrementAttribute.class);
+		this.offsetAttribute = addAttribute(OffsetAttribute.class);
 	}
 
 	@Override
@@ -40,17 +42,21 @@ public class SynonymFilter extends TokenFilter {
 		if(synonymStack.size() > 0){
 			String syn = synonymStack.pop();
 			restoreState(current);
-			charAttribute.setEmpty().append(syn);
+			charAttribute.setEmpty();
+			charAttribute.append(syn);
 			posincrAttribute.setPositionIncrement(0);
+			return true;
+//			System.out.println(charAttribute);
+//			System.out.println(posincrAttribute.getPositionIncrement());
+//			System.out.println(offsetAttribute.startOffset());
+//			System.out.println(offsetAttribute.endOffset());
 		}
-		
-//		input.reset();
-		
-		if(!input.incrementToken()){
+				
+		if(!this.input.incrementToken()){
 			return false;
 		}
 		
-		if(addAliasesToStack()){
+		if(this.addAliasesToStack()){
 			current = captureState();
 		}
  		return true;

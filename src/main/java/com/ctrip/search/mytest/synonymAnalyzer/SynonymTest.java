@@ -7,7 +7,7 @@ import com.ctrip.search.util.AnalyzerUtils;
 public class SynonymTest {
 
 	public static void main(String[] args) throws IOException {
-		AnalyzerUtils.displayTokensWithFullDetail(new SynonymAnalyzer(), "the quick brown fox jumps over the lazy dog");
+		AnalyzerUtils.displayTokensWithPositions(new SynonymAnalyzer(), "the quick brown fox jumps over the lazy dog");
 	}
 
 }
