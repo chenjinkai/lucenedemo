@@ -6,7 +6,6 @@ import java.util.Stack;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.util.AttributeSource;
 /**
@@ -26,7 +25,6 @@ public class SynonymFilter extends TokenFilter {
 	
 	private CharTermAttribute charAttribute;
 	private PositionIncrementAttribute posincrAttribute;
-	private OffsetAttribute offsetAttribute;
 
 	protected SynonymFilter(TokenStream input, SynonymEngine engine) {
 		super(input);
@@ -34,7 +32,6 @@ public class SynonymFilter extends TokenFilter {
 		this.engine = engine;
 		this.charAttribute = addAttribute(CharTermAttribute.class);
 		this.posincrAttribute = addAttribute(PositionIncrementAttribute.class);
-		this.offsetAttribute = addAttribute(OffsetAttribute.class);
 	}
 
 	@Override
