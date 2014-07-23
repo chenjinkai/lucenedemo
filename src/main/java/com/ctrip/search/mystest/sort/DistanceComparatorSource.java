@@ -3,6 +3,7 @@ package com.ctrip.search.mystest.sort;
 import java.io.IOException;
 
 import org.apache.lucene.index.AtomicReaderContext;
+import org.apache.lucene.search.FieldCache;
 import org.apache.lucene.search.FieldComparator;
 import org.apache.lucene.search.FieldComparatorSource;
 /**
@@ -37,8 +38,6 @@ public class DistanceComparatorSource extends FieldComparatorSource {
 		private float bottom;
 		String fieldName;
 		
-		
-		
 		public DistanceScoreDocLookupComparator(String fieldname, int numHits) throws IOException{
 			super();
 			this.values = new float[numHits];
@@ -47,45 +46,49 @@ public class DistanceComparatorSource extends FieldComparatorSource {
 
 		@Override
 		public int compare(int arg0, int arg1) {
-			// TODO Auto-generated method stub
+			if(values[arg0] < values[arg1]) return -1;
+			if(values[arg0] > values[arg1]) return 1;
 			return 0;
 		}
 
 		@Override
 		public int compareBottom(int arg0) throws IOException {
-			// TODO Auto-generated method stub
+			float docDistance = getDistance(arg0);
+			if(bottom < docDistance) return -1;
+			if(bottom > docDistance) return 1;
 			return 0;
 		}
 
 		@Override
 		public int compareDocToValue(int arg0, Object arg1) throws IOException {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
 		@Override
 		public void copy(int arg0, int arg1) throws IOException {
-			// TODO Auto-generated method stub
-			
+			values[arg0] = getDistance(arg1);
 		}
 
 		@Override
 		public void setBottom(int arg0) {
-			// TODO Auto-generated method stub
-			
+			bottom = values[arg0];
 		}
 
 		@Override
 		public FieldComparator setNextReader(AtomicReaderContext arg0)
 				throws IOException {
-			return null;
+			return this;
 		}
 
 		@Override
 		public Object value(int arg0) {
-			// TODO Auto-generated method stub
-			return null;
+			return new Float(values[arg0]);
 		}
 		
+		private float getDistance(int doc){
+			int deltax = xDoc[doc] - x;
+			int deltay = yDoc[doc] - y;
+			return (float)Math.sqrt(deltax * deltax + deltay * deltay);
+		}
 	}
 }

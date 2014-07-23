@@ -14,6 +14,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
@@ -38,7 +39,6 @@ public class DistanceSortingTest {
 		writer.close();
 		searcher = new IndexSearcher(DirectoryReader.open(directory));
 		query = new TermQuery(new Term("type", "restaurant"));
-		
 	}
 	
 	private void addPoint(IndexWriter writer, String name, String type, int x, int y) 
@@ -51,14 +51,16 @@ public class DistanceSortingTest {
 	}
 	
 	public void testNearestRestaurantToHome() throws Exception{
-		Sort sort = new Sort();
+		Sort sort = new Sort(new SortField("location", new DistanceComparatorSource(0, 0)));
 		TopDocs hits = searcher.search(query, null, 10, sort);
 		System.out.println("El charro".equals(searcher.doc(hits.scoreDocs[0].doc).get("name")));
 		System.out.println("Los betos".equals(searcher.doc(hits.scoreDocs[3].doc).get("name")));
 	}
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws Exception {
+		DistanceSortingTest disSort = new DistanceSortingTest();
+		disSort.setUp();
+		disSort.testNearestRestaurantToHome();
 	}
 
 }
