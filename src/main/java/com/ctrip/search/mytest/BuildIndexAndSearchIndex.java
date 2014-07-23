@@ -36,7 +36,7 @@ import com.ctrip.search.util.IndexUtil;
  * 
  * @author chenjk
  * @since 2014年6月26日
- *
+ *  
  */
 public class BuildIndexAndSearchIndex {
 
