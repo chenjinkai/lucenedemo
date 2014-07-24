@@ -1,5 +1,5 @@
 package com.ctrip.search.mystest.sort;
 
 public class TestGitMergeMaster {
-	private String testMaster;
+	private String test;
 }
