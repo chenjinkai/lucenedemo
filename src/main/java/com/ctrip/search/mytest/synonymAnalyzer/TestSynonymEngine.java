@@ -21,7 +21,6 @@ public class TestSynonymEngine implements SynonymEngine {
 		map.put("dog", new String[]{"canine", "pooch"});
 	}
 	
-	@Override
 	public String[] getSynonyms(String s) throws IOException {
 		return map.get(s);
 	}
